@@ -23,4 +23,10 @@ private:
 	// Default variables for level class.
 	sf::RenderWindow* window;
 	Input* input;
+
+	sf::CircleShape circle;
+	sf::CircleShape surkle;
+	float kerchow;
+	int dirX = 1;
+	int dirY = -1;
 };
