@@ -14,39 +14,41 @@ Level::Level(sf::RenderWindow* hwnd, Input* in)
 
 	kerchow = 200.f;
 
-	surkle.setRadius(25);
-	surkle.setPosition(300, 300);
-	surkle.setFillColor(sf::Color::Cyan);
-	surkle.setOutlineColor(sf::Color::White);
-	surkle.setOutlineThickness(2.f);
+	// Render text
+	if (!font.loadFromFile("font/arial.ttf"))
+	{
+		std::cout << "Error Loading Font\n";
+	}
+
+	sweetMesg.setFont(font);
+	sweetMesg.setString("Kerchow is " + std::to_string(kerchow) + " kerchows.");
+	sweetMesg.setCharacterSize(16);
+	sweetMesg.setFillColor(sf::Color::Red);
+	//sweetMesg.setStyle(sf::Text::Bold);
+	sweetMesg.setPosition(5, 5);
+
 }
 
 Level::~Level()
 {
-
+	//input = nullptr;
 }
 
 // handle user input
 void Level::handleInput(float dt)
 {
-	sf::Vector2u pos = window->getSize(); //Get the size of the window.
-	sf::Vector2f trespos = surkle.getPosition();
-
-	if (input->isKeyDown(sf::Keyboard::Up) == true && trespos.y >= 0)
+	if (input->isKeyDown(sf::Keyboard::Down) == true)
+	{
+		//input->setKeyUp(sf::Keyboard::Down);
+		kerchow = 100.f;
+	}
+	else if (input->isKeyDown(sf::Keyboard::Up) == true)
 	{
 		//input->setKeyUp(sf::Keyboard::Up);
-		surkle.move(0, -200 * dt);
+		//std::cout << "bleh.\n";
+		kerchow = 500.f;
 	}
-
-	else if (input->isKeyDown(sf::Keyboard::Down) == true && trespos.y <= (pos.y - 50))
-	{ surkle.move(0, 200 * dt); }
-
-	else if (input->isKeyDown(sf::Keyboard::Left) == true && trespos.x >= 0)
-	{ surkle.move(-200 * dt, 0); }
-
-	else if (input->isKeyDown(sf::Keyboard::Right) == true && trespos.x <= (pos.x - 50))
-	{ surkle.move(200 * dt, 0); }
-
+	else { kerchow = 200.f; }
 }
 
 // Update game objects
@@ -62,6 +64,8 @@ void Level::update(float dt)
 
 	//Update/move circle xoxo
 	circle.move(dirX * kerchow * dt, dirY * kerchow * dt); //offsetX and offsetY
+
+	sweetMesg.setString("Kerchow is " + std::to_string(kerchow) + " kerchows.");
 }
 
 // Render level
@@ -69,7 +73,7 @@ void Level::render()
 {
 	beginDraw();
 	window->draw(circle);
-	window->draw(surkle);
+	window->draw(sweetMesg);
 	endDraw();
 }
 

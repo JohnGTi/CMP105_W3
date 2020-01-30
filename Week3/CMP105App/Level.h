@@ -25,8 +25,10 @@ private:
 	Input* input;
 
 	sf::CircleShape circle;
-	sf::CircleShape surkle;
 	float kerchow;
 	int dirX = 1;
 	int dirY = -1;
+
+	sf::Font font;
+	sf::Text sweetMesg;
 };
